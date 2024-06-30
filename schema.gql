@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  _id: String!
+
+  """Firstname"""
+  firstname: String!
+
+  """Lastname"""
+  lastname: String!
+
+  """E-mail"""
+  email: String!
+}
+
+type Query {
+  user(id: String!): User!
+}
