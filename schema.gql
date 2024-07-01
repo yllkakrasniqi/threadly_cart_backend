@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserFavorite {
+  _id: String!
+  userID: String!
+  prod_color_id: String!
+  check: Boolean!
+  user: User!
+}
+
 type User {
   _id: String!
 
@@ -13,8 +21,18 @@ type User {
 
   """E-mail"""
   email: String!
+  favorites: [UserFavorite!]!
 }
 
 type Query {
   user(id: String!): User!
+}
+
+type Mutation {
+  addFavorite(addFavoriteInput: AddFavoriteInput!): UserFavorite!
+}
+
+input AddFavoriteInput {
+  userID: String!
+  prod_color_id: String!
 }

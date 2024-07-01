@@ -10,6 +10,10 @@ import { UserService } from './user/user.service';
 import { UserResolver } from './user/user.resolver';
 import { userProviders } from './user/user.providers';
 import { databaseProviders } from './database/database.providers';
+import { FavoriteService } from './favorite/favorite.service';
+import { favoriteProviders } from './favorite/favorite.providers';
+import { FavoriteModule } from './favorite/favorite.module';
+import { FavoriteResolver } from './favorite/favorite.resolver';
 
 @Module({
   imports: [
@@ -21,7 +25,8 @@ import { databaseProviders } from './database/database.providers';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     DatabaseModule,
-    UserModule
+    UserModule,
+    FavoriteModule
   ],
   controllers: [AppController],
   providers: [
@@ -29,7 +34,10 @@ import { databaseProviders } from './database/database.providers';
     ...databaseProviders,
     UserService,
     UserResolver,
-    ...userProviders
+    ...userProviders,
+    FavoriteService,
+    FavoriteResolver,
+    ...favoriteProviders
   ],
 })
 export class AppModule {}
