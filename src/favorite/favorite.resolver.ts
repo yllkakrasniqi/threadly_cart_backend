@@ -10,6 +10,13 @@ export class FavoriteResolver {
         @Inject(FavoriteService) private favoriteService: FavoriteService
     ) {}
 
+    //Queries:
+    @Query(() => UserFavorite, { name: 'favorite', nullable: true })
+    favorite(@Args('favoriteInput') favoiteInput: AddFavoriteInput ) {
+        return this.favoriteService.findFavoriteProduct(favoiteInput)
+    }
+
+    //Mutation
     @Mutation(() => UserFavorite)
     addFavorite(@Args('addFavoriteInput') addFavoriteInput: AddFavoriteInput ) {
         return this.favoriteService.addFavorite(addFavoriteInput)

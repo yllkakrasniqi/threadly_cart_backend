@@ -9,8 +9,20 @@ export class FavoriteService {
         @Inject('FAVORITE_MODEL') private favoriteModel: Model<UserFavorite>
     ) {}
 
+
     findByUser(userID: string): Promise<UserFavorite[]> {
         return this.favoriteModel.find({userID: userID}).lean()
+    }
+
+    async findFavoriteProduct(favoriteInput: AddFavoriteInput): Promise<UserFavorite | null> {
+        const favoriteProduct = await this.favoriteModel.findOne({
+            userID: favoriteInput.userID,
+            prod_color_id: favoriteInput.prod_color_id
+        }).lean()
+        if(!favoriteProduct){
+            return null
+        }
+        return favoriteProduct
     }
 
     async addFavorite(addFavoriteInput: AddFavoriteInput) {

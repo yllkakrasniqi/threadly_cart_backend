@@ -26,13 +26,14 @@ type User {
 
 type Query {
   user(id: String!): User!
-}
-
-type Mutation {
-  addFavorite(addFavoriteInput: AddFavoriteInput!): UserFavorite!
+  favorite(favoriteInput: AddFavoriteInput!): UserFavorite
 }
 
 input AddFavoriteInput {
   userID: String!
   prod_color_id: String!
+}
+
+type Mutation {
+  addFavorite(addFavoriteInput: AddFavoriteInput!): UserFavorite!
 }
