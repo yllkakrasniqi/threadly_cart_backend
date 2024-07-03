@@ -14,7 +14,7 @@ export class UserResolver {
 
     //Queries:
     @Query(() => User, { name: 'user' })
-    user(@Args('id', { type: () => String }) id: string) {
+    user(@Args('id', { type: () => String }) id: string): Promise<User> {
         return this.userService.findOne(id)
     }
 

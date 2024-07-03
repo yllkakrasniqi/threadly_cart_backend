@@ -8,7 +8,7 @@ export class UserService {
         @Inject('USER_MODEL') private userModel: Model<User>
     ) {}
 
-    findOne(id: string) {
+    findOne(id: string): Promise<User> {
         return this.userModel.findById(id)
     }
 

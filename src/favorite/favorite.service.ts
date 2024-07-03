@@ -9,7 +9,6 @@ export class FavoriteService {
         @Inject('FAVORITE_MODEL') private favoriteModel: Model<UserFavorite>
     ) {}
 
-
     findByUser(userID: string): Promise<UserFavorite[]> {
         return this.favoriteModel.find({userID: userID}).lean()
     }

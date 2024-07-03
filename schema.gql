@@ -33,6 +33,7 @@ type UserCart {
 
 type Query {
   user(id: String!): User!
+  favorites(userID: String!): [UserFavorite!]!
   favorite(favoriteInput: AddFavoriteInput!): UserFavorite
 }
 
