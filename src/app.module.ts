@@ -14,6 +14,10 @@ import { FavoriteService } from './favorite/favorite.service';
 import { favoriteProviders } from './favorite/favorite.providers';
 import { FavoriteModule } from './favorite/favorite.module';
 import { FavoriteResolver } from './favorite/favorite.resolver';
+import { CartModule } from './cart/cart.module';
+import { CartService } from './cart/cart.service';
+import { CartResolver } from './cart/cart.resolver';
+import { cartProviders } from './cart/cart.providers';
 
 @Module({
   imports: [
@@ -26,7 +30,8 @@ import { FavoriteResolver } from './favorite/favorite.resolver';
     }),
     DatabaseModule,
     UserModule,
-    FavoriteModule
+    FavoriteModule,
+    CartModule
   ],
   controllers: [AppController],
   providers: [
@@ -37,7 +42,10 @@ import { FavoriteResolver } from './favorite/favorite.resolver';
     ...userProviders,
     FavoriteService,
     FavoriteResolver,
-    ...favoriteProviders
+    ...favoriteProviders,
+    CartService,
+    CartResolver,
+    ...cartProviders
   ],
 })
 export class AppModule {}

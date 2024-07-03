@@ -24,6 +24,13 @@ type User {
   favorites: [UserFavorite!]!
 }
 
+type UserCart {
+  _id: String!
+  userID: String!
+  prod_size_id: String!
+  quantity: Float!
+}
+
 type Query {
   user(id: String!): User!
   favorite(favoriteInput: AddFavoriteInput!): UserFavorite
@@ -36,4 +43,10 @@ input AddFavoriteInput {
 
 type Mutation {
   addFavorite(addFavoriteInput: AddFavoriteInput!): UserFavorite!
+  addCart(addCartInput: AddCartInput!): UserCart
+}
+
+input AddCartInput {
+  userID: String!
+  prod_size_id: String!
 }
