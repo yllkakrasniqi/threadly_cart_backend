@@ -11,6 +11,7 @@ export const UserSchema = new mongoose.Schema({
 
 @ObjectType()
 export class User extends Document {
+    @Prop({ type: mongoose.Schema.Types.ObjectId })
     @Field(() => String)
     _id: string;
 

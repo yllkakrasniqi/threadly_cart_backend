@@ -1,12 +1,16 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { UserFavorite } from "./entities/userfavorites.entity";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { AddFavoriteInput } from "./dto/add-favorite.input";
+import { UserFavorite } from "./entities/userfavorites.entity";
+import { ProdColor } from "./entities/prodcolor.entity";
+import { ProdImage } from "./entities/prodimage.entity";
 
 @Injectable() 
 export class FavoriteService {
     constructor(
-        @Inject('FAVORITE_MODEL') private favoriteModel: Model<UserFavorite>
+        @Inject('FAVORITE_MODEL') private favoriteModel: Model<UserFavorite>,
+        @Inject('PRODCOLOR_MODEL') private prodColorModel: Model<ProdColor>,
+        @Inject('PRODIMAGE_MODEL') private prodImageModel: Model<ProdImage>,
     ) {}
 
     findByUser(userID: string): Promise<UserFavorite[]> {
@@ -23,7 +27,7 @@ export class FavoriteService {
         }
         return favoriteProduct
     }
-
+    
     async addFavorite(addFavoriteInput: AddFavoriteInput) {
         let prevUserFavorite = await this.favoriteModel.findOne({
             userID: addFavoriteInput.userID,
@@ -40,6 +44,16 @@ export class FavoriteService {
                 check: true
             })
         }
-        
     }
+
+    findProdColor(id: string): Promise<ProdColor> {
+        return this.prodColorModel.findById(id).lean()
+    }
+
+    async findProdImage(prod_color_id: string): Promise<ProdImage[]> {
+        return this.prodImageModel.find({
+            prod_color_id: prod_color_id
+        }).lean()
+    }
+
 }

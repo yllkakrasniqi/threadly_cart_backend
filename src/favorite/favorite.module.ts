@@ -5,7 +5,6 @@ import { FavoriteService } from "./favorite.service";
 import { FavoriteResolver } from "./favorite.resolver";
 import { UserService } from "src/user/user.service";
 import { userProviders } from "src/user/user.providers";
-
 @Module({
     imports: [DatabaseModule],
     providers: [
@@ -13,7 +12,7 @@ import { userProviders } from "src/user/user.providers";
         FavoriteResolver,
         ...favoriteProviders,
         UserService,
-        ...userProviders
+        ...userProviders,
     ]
 })
 export class FavoriteModule {}

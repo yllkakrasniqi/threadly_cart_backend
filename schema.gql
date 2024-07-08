@@ -2,12 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ProdImage {
+  _id: String!
+  filename: String!
+  path: String!
+  prod_color_id: String!
+}
+
+type ProdColor {
+  _id: String!
+  productID: String!
+  colorID: String!
+  prodimages: [ProdImage!]!
+}
+
 type UserFavorite {
   _id: String!
   userID: String!
   prod_color_id: String!
   check: Boolean!
   user: User!
+  prodcolor: ProdColor!
+  prodimages: [ProdImage!]!
 }
 
 type User {
