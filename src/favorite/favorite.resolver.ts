@@ -5,14 +5,16 @@ import { FavoriteService } from "./favorite.service";
 import { AddFavoriteInput } from "./dto/add-favorite.input";
 import { User } from "src/user/entities/user.entity";
 import { UserService } from "src/user/user.service";
-import { ProdColor } from "./entities/prodcolor.entity";
 import { ProdImage } from "./entities/prodimage.entity";
+import { ProdColor } from "src/prodcolor/entities/prodcolor.entity";
+import { ProdcolorService } from "src/prodcolor/prodcolor.service";
 
 @Resolver(() => UserFavorite)
 export class FavoriteResolver {
     constructor(
         @Inject(FavoriteService) private favoriteService: FavoriteService,
-        @Inject(UserService) private userService: UserService
+        @Inject(UserService) private userService: UserService,
+        @Inject(ProdcolorService) private prodcolorService: ProdcolorService
     ) {}
 
     //Queries:
@@ -35,7 +37,7 @@ export class FavoriteResolver {
     @ResolveField(returns => ProdColor)
     async prodcolor(@Parent() favorite): Promise<ProdColor> {
         const { prod_color_id } = favorite;
-        return this.favoriteService.findProdColor(prod_color_id)
+        return this.prodcolorService.findOne(prod_color_id)
     }
 
     @ResolveField(returns => [ProdImage])

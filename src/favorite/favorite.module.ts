@@ -5,6 +5,9 @@ import { FavoriteService } from "./favorite.service";
 import { FavoriteResolver } from "./favorite.resolver";
 import { UserService } from "src/user/user.service";
 import { userProviders } from "src/user/user.providers";
+import { prodcolorProviders } from "src/prodcolor/prodcolor.providers";
+import { ProdcolorService } from "src/prodcolor/prodcolor.service";
+
 @Module({
     imports: [DatabaseModule],
     providers: [
@@ -13,6 +16,9 @@ import { userProviders } from "src/user/user.providers";
         ...favoriteProviders,
         UserService,
         ...userProviders,
+        ProdcolorService,
+        ...prodcolorProviders
+        
     ]
 })
 export class FavoriteModule {}

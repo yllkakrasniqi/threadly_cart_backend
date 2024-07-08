@@ -1,15 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
-import mongoose, { Model } from "mongoose";
+import { Model } from "mongoose";
 import { AddFavoriteInput } from "./dto/add-favorite.input";
 import { UserFavorite } from "./entities/userfavorites.entity";
-import { ProdColor } from "./entities/prodcolor.entity";
 import { ProdImage } from "./entities/prodimage.entity";
 
 @Injectable() 
 export class FavoriteService {
     constructor(
         @Inject('FAVORITE_MODEL') private favoriteModel: Model<UserFavorite>,
-        @Inject('PRODCOLOR_MODEL') private prodColorModel: Model<ProdColor>,
         @Inject('PRODIMAGE_MODEL') private prodImageModel: Model<ProdImage>,
     ) {}
 
@@ -44,10 +42,6 @@ export class FavoriteService {
                 check: true
             })
         }
-    }
-
-    findProdColor(id: string): Promise<ProdColor> {
-        return this.prodColorModel.findById(id).lean()
     }
 
     async findProdImage(prod_color_id: string): Promise<ProdImage[]> {

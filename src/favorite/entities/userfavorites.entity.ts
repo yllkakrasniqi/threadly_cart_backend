@@ -2,8 +2,8 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { User } from "src/user/entities/user.entity";
-import { ProdColor } from "./prodcolor.entity";
 import { ProdImage } from "./prodimage.entity";
+import { ProdColor } from "src/prodcolor/entities/prodcolor.entity";
 
 export const UserFavoriteSchema = new mongoose.Schema({
     userID: mongoose.Schema.ObjectId,

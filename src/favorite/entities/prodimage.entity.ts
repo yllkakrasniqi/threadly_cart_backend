@@ -1,7 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
-import { ProdColor } from "./prodcolor.entity";
 
 export const ProdImageSchema = new mongoose.Schema({
     filename: String,

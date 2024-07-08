@@ -18,6 +18,9 @@ import { CartModule } from './cart/cart.module';
 import { CartService } from './cart/cart.service';
 import { CartResolver } from './cart/cart.resolver';
 import { cartProviders } from './cart/cart.providers';
+import { ProdcolorService } from './prodcolor/prodcolor.service';
+import { ProdcolorResolver } from './prodcolor/prodcolor.resolver';
+import { prodcolorProviders } from './prodcolor/prodcolor.providers';
 
 @Module({
   imports: [
@@ -45,7 +48,10 @@ import { cartProviders } from './cart/cart.providers';
     ...favoriteProviders,
     CartService,
     CartResolver,
-    ...cartProviders
+    ...cartProviders,
+    ProdcolorService,
+    ProdcolorResolver,
+    ...prodcolorProviders
   ],
 })
 export class AppModule {}
