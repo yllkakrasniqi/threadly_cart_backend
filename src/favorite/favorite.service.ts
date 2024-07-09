@@ -12,7 +12,7 @@ export class FavoriteService {
     ) {}
 
     findByUser(userID: string): Promise<UserFavorite[]> {
-        return this.favoriteModel.find({userID: userID}).lean()
+        return this.favoriteModel.find({userID: userID, check: true}).lean()
     }
 
     async findFavoriteProduct(favoriteInput: AddFavoriteInput): Promise<UserFavorite | null> {
