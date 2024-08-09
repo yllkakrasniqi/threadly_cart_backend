@@ -8,8 +8,17 @@ export class UserService {
         @Inject('USER_MODEL') private userModel: Model<User>
     ) {}
 
-    findOne(id: string): Promise<User> {
-        return this.userModel.findById(id)
+    async findOne(id: string): Promise<User> {
+        const user: User = await this.userModel.findById(id)
+        return user
+    }
+
+    findOneByEmail(email: string): Promise<User> {
+        return this.userModel.findOne({ email: email })
+    }
+
+    getUsers(): Promise<User[]> {
+        return this.userModel.find()
     }
 
 }

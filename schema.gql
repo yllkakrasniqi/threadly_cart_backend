@@ -9,11 +9,17 @@ type ProdImage {
   prod_color_id: String!
 }
 
+type Color {
+  _id: String!
+  colorStr: String!
+}
+
 type ProdColor {
   _id: String!
   productID: String!
   colorID: String!
   prodimages: [ProdImage!]!
+  color: Color!
   product: Product!
   brand: Brand!
 }
@@ -39,6 +45,9 @@ type User {
 
   """E-mail"""
   email: String!
+
+  """Password"""
+  password: String!
   favorites: [UserFavorite!]!
 }
 
@@ -66,21 +75,12 @@ type Product {
 
 type Query {
   user(id: String!): User!
-  favorites(userID: String!): [UserFavorite!]!
-  favorite(favoriteInput: AddFavoriteInput!): UserFavorite
-}
-
-input AddFavoriteInput {
-  userID: String!
-  prod_color_id: String!
+  users: [User!]!
+  favorites: [UserFavorite!]!
+  favorite(prod_color_id: String!): UserFavorite
 }
 
 type Mutation {
-  addFavorite(addFavoriteInput: AddFavoriteInput!): UserFavorite!
-  addCart(addCartInput: AddCartInput!): UserCart
-}
-
-input AddCartInput {
-  userID: String!
-  prod_size_id: String!
+  addFavorite(prod_color_id: String!): UserFavorite!
+  addCart(prod_size_id: String!): UserCart
 }

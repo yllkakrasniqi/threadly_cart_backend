@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
-import { AddFavoriteInput } from "./dto/add-favorite.input";
 import { UserFavorite } from "./entities/userfavorites.entity";
 import { ProdImage } from "./entities/prodimage.entity";
 
@@ -15,10 +14,10 @@ export class FavoriteService {
         return this.favoriteModel.find({userID: userID, check: true}).lean()
     }
 
-    async findFavoriteProduct(favoriteInput: AddFavoriteInput): Promise<UserFavorite | null> {
+    async findFavoriteProduct(userID: string, prod_color_id: string): Promise<UserFavorite | null> {
         const favoriteProduct = await this.favoriteModel.findOne({
-            userID: favoriteInput.userID,
-            prod_color_id: favoriteInput.prod_color_id
+            userID: userID,
+            prod_color_id: prod_color_id
         }).lean()
         if(!favoriteProduct){
             return null
@@ -26,10 +25,10 @@ export class FavoriteService {
         return favoriteProduct
     }
     
-    async addFavorite(addFavoriteInput: AddFavoriteInput) {
+    async addFavorite(userID: string, prod_color_id: string) {
         let prevUserFavorite = await this.favoriteModel.findOne({
-            userID: addFavoriteInput.userID,
-            prod_color_id: addFavoriteInput.prod_color_id
+            userID: userID,
+            prod_color_id: prod_color_id
         })
         if(prevUserFavorite) {
             return this.favoriteModel.findByIdAndUpdate(prevUserFavorite._id, {
@@ -37,8 +36,8 @@ export class FavoriteService {
             })
         } else {
             return this.favoriteModel.create({
-                userID: addFavoriteInput.userID,
-                prod_color_id: addFavoriteInput.prod_color_id,
+                userID: userID,
+                prod_color_id: prod_color_id,
                 check: true
             })
         }

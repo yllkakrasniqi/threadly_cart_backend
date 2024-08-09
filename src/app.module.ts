@@ -21,6 +21,7 @@ import { cartProviders } from './cart/cart.providers';
 import { ProdcolorService } from './prodcolor/prodcolor.service';
 import { ProdcolorResolver } from './prodcolor/prodcolor.resolver';
 import { prodcolorProviders } from './prodcolor/prodcolor.providers';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,10 +32,12 @@ import { prodcolorProviders } from './prodcolor/prodcolor.providers';
       // To use Apollo Sandbox instead of the graphql-playground as a GraphQL IDE for local development 
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    
     DatabaseModule,
     UserModule,
     FavoriteModule,
-    CartModule
+    CartModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
@@ -51,7 +54,7 @@ import { prodcolorProviders } from './prodcolor/prodcolor.providers';
     ...cartProviders,
     ProdcolorService,
     ProdcolorResolver,
-    ...prodcolorProviders
+    ...prodcolorProviders,
   ],
 })
 export class AppModule {}

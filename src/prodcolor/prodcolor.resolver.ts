@@ -4,6 +4,7 @@ import { Inject } from "@nestjs/common";
 import { ProdcolorService } from "./prodcolor.service";
 import { Product } from "./entities/product.entity";
 import { Brand } from "./entities/brand.entity";
+import { Color } from "./entities/color.entity";
 
 @Resolver(() => ProdColor)
 export class ProdcolorResolver {
@@ -22,5 +23,11 @@ export class ProdcolorResolver {
         const { productID } = prodcolor;
         return this.prodcolorService.findBrand(productID)
 
+    }
+
+    @ResolveField(returns => Color)
+    async color(@Parent() prodcolor): Promise<Color> {
+        const { colorID } = prodcolor;
+        return this.prodcolorService.findColor(colorID)
     }
 }

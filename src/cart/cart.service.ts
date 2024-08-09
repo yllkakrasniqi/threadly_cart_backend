@@ -11,16 +11,16 @@ export class CartService {
         @Inject('PRODSIZEAMOUNT_MODEL') private prodSizeAmount: Model<ProdSizeAmount>
     ) {}
 
-    async addCart(addCartInput: AddCartInput): Promise<UserCart | null> {
-        let prodSizeAmount = await this.prodSizeAmount.findById(addCartInput.prod_size_id)
-        let userCarts = await this.cartModel.find({prod_size_id: addCartInput.prod_size_id})
-
+    async addCart(userId: string, prod_size_id: string): Promise<UserCart | null> {
+        let prodSizeAmount = await this.prodSizeAmount.findById(prod_size_id)
+        let userCarts = await this.cartModel.find({prod_size_id: prod_size_id})
+        
         const totalQuantity: number = userCarts.reduce((sum, item) => sum + item.quantity, 0);
         if ( prodSizeAmount.quantity - totalQuantity === 0 ) {
             return null
         }
 
-        const userCart = userCarts.find( ele => ele.userID === addCartInput.userID)
+        const userCart = userCarts.find( ele => ele.userID === userId)
         if (userCart) {
             return this.cartModel.findByIdAndUpdate(userCart._id, {
                 quantity: userCart.quantity + 1
@@ -28,8 +28,8 @@ export class CartService {
         }
 
         return this.cartModel.create({
-            userID: addCartInput.userID,
-            prod_size_id: addCartInput.prod_size_id,
+            userID: userId,
+            prod_size_id: prod_size_id,
             quantity: 1
         })
     }

@@ -2,6 +2,7 @@ import { Connection } from "mongoose";
 import { ProdColorSchema } from "./entities/prodcolor.entity";
 import { ProductSchema } from "./entities/product.entity";
 import { BrandSchema } from "./entities/brand.entity";
+import { ColorSchema } from "./entities/color.entity";
 
 export const prodcolorProviders = [
     {
@@ -20,6 +21,12 @@ export const prodcolorProviders = [
         provide: 'BRAND_MODEL',
         useFactory: (connection: Connection) =>
             connection.model('Brand', BrandSchema),
+        inject: ['DATABASE_CONNECTION'],
+    },
+    {
+        provide: 'COLOR_MODEL',
+        useFactory: (connection: Connection) =>
+            connection.model('Color', ColorSchema),
         inject: ['DATABASE_CONNECTION'],
     }
 ]

@@ -24,6 +24,9 @@ export class User extends Document {
     @Field(() => String, { description: 'E-mail' })
     email: string;
     
+    @Field(() => String, { description: 'Password' })
+    password: string;
+    
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserFavorite' }] })
     @Field(type => [UserFavorite])
     favorites: UserFavorite[]

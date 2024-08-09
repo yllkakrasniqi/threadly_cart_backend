@@ -1,13 +1,13 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Args, Context, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 import { UserFavorite } from "./entities/userfavorites.entity";
-import { Inject } from "@nestjs/common";
+import { Inject, UseGuards } from "@nestjs/common";
 import { FavoriteService } from "./favorite.service";
-import { AddFavoriteInput } from "./dto/add-favorite.input";
 import { User } from "src/user/entities/user.entity";
 import { UserService } from "src/user/user.service";
 import { ProdImage } from "./entities/prodimage.entity";
 import { ProdColor } from "src/prodcolor/entities/prodcolor.entity";
 import { ProdcolorService } from "src/prodcolor/prodcolor.service";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Resolver(() => UserFavorite)
 export class FavoriteResolver {
@@ -18,14 +18,18 @@ export class FavoriteResolver {
     ) {}
 
     //Queries:
+    @UseGuards(JwtAuthGuard)
     @Query(() => [UserFavorite], { name: 'favorites'})
-    favorites(@Args('userID') userID: string){
-        return this.favoriteService.findByUser(userID)
+    favorites(@Context() context: any){
+        const user = context.req.user
+        return this.favoriteService.findByUser(user.id)
     }
 
+    @UseGuards(JwtAuthGuard)
     @Query(() => UserFavorite, { name: 'favorite', nullable: true })
-    favorite(@Args('favoriteInput') favoiteInput: AddFavoriteInput ) {
-        return this.favoriteService.findFavoriteProduct(favoiteInput)
+    favorite(@Args('prod_color_id') prod_color_id: string, @Context() context: any ) {
+        const user = context.req.user
+        return this.favoriteService.findFavoriteProduct(user.id, prod_color_id)
     }
 
     @ResolveField(returns => User)
@@ -47,9 +51,11 @@ export class FavoriteResolver {
     }
 
     //Mutation
+    @UseGuards(JwtAuthGuard)
     @Mutation(() => UserFavorite)
-    addFavorite(@Args('addFavoriteInput') addFavoriteInput: AddFavoriteInput ) {
-        return this.favoriteService.addFavorite(addFavoriteInput)
+    addFavorite(@Args('prod_color_id') prod_color_id: string, @Context() context: any) {
+        const user = context.req.user
+        return this.favoriteService.addFavorite(user.id, prod_color_id)
     }
 
 }
