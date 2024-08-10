@@ -75,9 +75,9 @@ type Product {
 
 type Query {
   user(id: String!): User!
-  users: [User!]!
   favorites: [UserFavorite!]!
   favorite(prod_color_id: String!): UserFavorite
+  cart_items: [UserCart!]!
 }
 
 type Mutation {

@@ -1,8 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { UserCart } from "./entities/usercart.entity";
-import { AddCartInput } from "./dto/add-cart.input";
 import { ProdSizeAmount } from "./entities/prodsizeamount.entity";
+import { Equal, MoreThan } from 'typeorm'
+import { Op } from 'sequelize'
 
 @Injectable()
 export class CartService {
@@ -10,6 +11,17 @@ export class CartService {
         @Inject('CART_MODEL') private cartModel: Model<UserCart>,
         @Inject('PRODSIZEAMOUNT_MODEL') private prodSizeAmount: Model<ProdSizeAmount>
     ) {}
+
+    findAll(): Promise<UserCart[]> {
+        return this.cartModel.find().exec()
+    }
+
+    findByUser(userID: string): Promise<UserCart[]> {
+        return this.cartModel.find({
+            userID: userID,
+            quantity: { $gte: 1 }
+        }).exec();
+    }
 
     async addCart(userId: string, prod_size_id: string): Promise<UserCart | null> {
         let prodSizeAmount = await this.prodSizeAmount.findById(prod_size_id)

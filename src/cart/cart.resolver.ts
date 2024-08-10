@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Inject, UseGuards } from "@nestjs/common";
 
 import { UserCart } from "./entities/usercart.entity";
@@ -12,6 +12,12 @@ export class CartResolver {
     ){}
 
     //Queries:
+    @UseGuards(JwtAuthGuard)
+    @Query(() => [UserCart], { name: 'cart_items'})
+    cart_items(@Context() context: any){
+        const user = context.req.user
+        return this.cartService.findByUser(user.id)
+    }
 
     //Mutation:
     @UseGuards(JwtAuthGuard)
