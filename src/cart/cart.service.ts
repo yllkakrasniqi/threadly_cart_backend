@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { UserCart } from "./entities/usercart.entity";
 import { ProdSizeAmount } from "./entities/prodsizeamount.entity";
 import { Equal, MoreThan } from 'typeorm'
@@ -26,13 +26,13 @@ export class CartService {
     async addCart(userId: string, prod_size_id: string): Promise<UserCart | null> {
         let prodSizeAmount = await this.prodSizeAmount.findById(prod_size_id)
         let userCarts = await this.cartModel.find({prod_size_id: prod_size_id})
-        
+
         const totalQuantity: number = userCarts.reduce((sum, item) => sum + item.quantity, 0);
         if ( prodSizeAmount.quantity - totalQuantity === 0 ) {
             return null
         }
 
-        const userCart = userCarts.find( ele => ele.userID === userId)
+        const userCart = await this.cartModel.findOne({userID: userId, prod_size_id: prod_size_id})
         if (userCart) {
             return this.cartModel.findByIdAndUpdate(userCart._id, {
                 quantity: userCart.quantity + 1
