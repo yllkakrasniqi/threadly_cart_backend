@@ -1,10 +1,19 @@
 import mongoose from "mongoose";
-import { MONO_DB_CONNECTION_STRING } from "src/constants";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 export const databaseProviders = [
     {
+        import: [ConfigModule],
         provide: 'DATABASE_CONNECTION',
-        useFactory: (): Promise<typeof mongoose> => 
-            mongoose.connect(MONO_DB_CONNECTION_STRING)
+        useFactory: async (configService: ConfigService): Promise<typeof mongoose> => {
+            const connectionData = {
+                host: configService.get<string>('mongodb.database.host'),
+                port: configService.get<number>('mongodb.database.port'),
+                databaseName: configService.get<string>('mongodb.database.databaseName')
+            }
+            const connection = await mongoose.connect(`mongodb://${connectionData.host}:${connectionData.port}/${connectionData.databaseName}`)
+            return connection
+        },
+        inject: [ConfigService]
     }
 ]

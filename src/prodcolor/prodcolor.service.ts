@@ -14,7 +14,8 @@ export class ProdcolorService {
         @Inject('COLOR_MODEL') private colorModel: Model<Color>
     ) {}
 
-    findOne(id: string): Promise<ProdColor> {
+    async findOne(id: string): Promise<ProdColor> {
+        const prodColor = await this.prodColorModel.findById(id)
         return this.prodColorModel.findById(id).lean()
     }
 

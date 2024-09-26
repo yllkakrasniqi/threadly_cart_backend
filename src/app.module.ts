@@ -22,6 +22,8 @@ import { ProdcolorService } from './prodcolor/prodcolor.service';
 import { ProdcolorResolver } from './prodcolor/prodcolor.resolver';
 import { prodcolorProviders } from './prodcolor/prodcolor.providers';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { config } from './config';
 
 @Module({
   imports: [
@@ -31,6 +33,11 @@ import { AuthModule } from './auth/auth.module';
       playground: false,
       // To use Apollo Sandbox instead of the graphql-playground as a GraphQL IDE for local development 
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    }),
+
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config]
     }),
     
     DatabaseModule,

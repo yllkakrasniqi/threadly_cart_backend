@@ -1,9 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
-import mongoose, { Model } from "mongoose";
+import { Model } from "mongoose";
 import { UserCart } from "./entities/usercart.entity";
 import { ProdSizeAmount } from "./entities/prodsizeamount.entity";
-import { Equal, MoreThan } from 'typeorm'
-import { Op } from 'sequelize'
 
 @Injectable()
 export class CartService {

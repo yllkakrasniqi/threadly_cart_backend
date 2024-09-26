@@ -30,6 +30,7 @@ export class FavoriteService {
             userID: userID,
             prod_color_id: prod_color_id
         })
+        
         if(prevUserFavorite) {
             return this.favoriteModel.findByIdAndUpdate(prevUserFavorite._id, {
                 check: !prevUserFavorite.check
