@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { UserCart } from "./entities/usercart.entity";
-import { ProdSizeAmount } from "./entities/prodsizeamount.entity";
+import { ProdSizeAmount } from "src/prodsize/entities/prodsizeamount.entity";
 
 @Injectable()
 export class CartService {
@@ -42,5 +42,16 @@ export class CartService {
             prod_size_id: prod_size_id,
             quantity: 1
         })
+    }
+
+    async findCartProduct(userID: string, prod_color_id: string): Promise<UserCart | null> {
+        const cartProduct = await this.cartModel.findOne({
+            userID: userID,
+            prod_color_id: prod_color_id
+        }).lean()
+        if(!cartProduct){
+            return null
+        }
+        return cartProduct
     }
 }

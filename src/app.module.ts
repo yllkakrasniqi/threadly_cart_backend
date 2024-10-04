@@ -24,6 +24,9 @@ import { prodcolorProviders } from './prodcolor/prodcolor.providers';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config';
+import { ProdsizeService } from './prodsize/prodsize.service';
+import { ProdsizeResolver } from './prodsize/prodsize.resolver';
+import { prodsizeProviders } from './prodsize/prodsize.providers';
 
 @Module({
   imports: [
@@ -62,6 +65,9 @@ import { config } from './config';
     ProdcolorService,
     ProdcolorResolver,
     ...prodcolorProviders,
+    ProdsizeService,
+    ProdsizeResolver,
+    ...prodsizeProviders
   ],
 })
 export class AppModule {}

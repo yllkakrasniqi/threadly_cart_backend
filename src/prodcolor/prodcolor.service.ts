@@ -15,7 +15,6 @@ export class ProdcolorService {
     ) {}
 
     async findOne(id: string): Promise<ProdColor> {
-        const prodColor = await this.prodColorModel.findById(id)
         return this.prodColorModel.findById(id).lean()
     }
 

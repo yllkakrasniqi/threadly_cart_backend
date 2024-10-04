@@ -1,14 +1,17 @@
-import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Context, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 import { Inject, UseGuards } from "@nestjs/common";
 
 import { UserCart } from "./entities/usercart.entity";
 import { CartService } from "./cart.service";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
+import { ProdsizeService } from "src/prodsize/prodsize.service";
+import { ProdSizeAmount } from "src/prodsize/entities/prodsizeamount.entity";
 
 @Resolver(() => UserCart)
 export class CartResolver {
     constructor(
-        @Inject(CartService) private cartService: CartService
+        @Inject(CartService) private cartService: CartService,
+        @Inject(ProdsizeService) private prodsizeService: ProdsizeService
     ){}
 
     //Queries:
@@ -17,6 +20,12 @@ export class CartResolver {
     cart_items(@Context() context: any){
         const user = context.req.user
         return this.cartService.findByUser(user.id)
+    }
+
+    @ResolveField(returns => ProdSizeAmount)
+    async prodsize(@Parent() cart_item): Promise<ProdSizeAmount> {
+        const { prod_size_id } = cart_item
+        return this.prodsizeService.findOne(prod_size_id)
     }
 
     //Mutation:

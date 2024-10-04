@@ -1,6 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
+import { ProdSizeAmount } from "src/prodsize/entities/prodsizeamount.entity";
 
 export const UserCartSchema = new mongoose.Schema({
     userID: mongoose.Schema.ObjectId,
@@ -24,4 +25,8 @@ export class UserCart extends Document {
 
     @Field(() => Number)
     quantity: number;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'ProdSizeAmount' })
+    @Field(() => ProdSizeAmount)
+    prodsize: ProdSizeAmount;
 }

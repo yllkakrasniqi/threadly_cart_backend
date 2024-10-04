@@ -51,11 +51,28 @@ type User {
   favorites: [UserFavorite!]!
 }
 
+type Size {
+  _id: String!
+  name: String!
+  description: String!
+  standard: String!
+}
+
+type ProdSizeAmount {
+  _id: String!
+  prod_color_id: String!
+  size_id: String!
+  quantity: Float!
+  prodcolor: ProdColor!
+  size: Size!
+}
+
 type UserCart {
   _id: String!
   userID: String!
   prod_size_id: String!
   quantity: Float!
+  prodsize: ProdSizeAmount!
 }
 
 type Brand {
